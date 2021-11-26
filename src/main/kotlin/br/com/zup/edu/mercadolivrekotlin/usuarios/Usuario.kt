@@ -1,4 +1,4 @@
-package br.com.zup.edu.mercadolivrekotlin.autores
+package br.com.zup.edu.mercadolivrekotlin.usuarios
 
 import java.time.LocalDateTime
 import javax.persistence.*

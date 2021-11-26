@@ -1,7 +1,6 @@
-package br.com.zup.edu.mercadolivrekotlin.autores
+package br.com.zup.edu.mercadolivrekotlin.usuarios
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -13,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.transaction.annotation.Transactional
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -22,6 +22,9 @@ internal class NovoUsuarioControllerTest(
     lateinit var objectMapper: ObjectMapper
     @Autowired
     lateinit var mockMvc: MockMvc
+
+    @Autowired
+    lateinit var usuarioRepository: UsuarioRepository
 
     @Test
     fun `Deve salvar um usuario com sucesso`() {
@@ -48,6 +51,25 @@ internal class NovoUsuarioControllerTest(
 
         val usuarioRequest = NovoUsuarioRequest(login, senha)
         val content = objectMapper.writeValueAsString(usuarioRequest)
+
+        val request = MockMvcRequestBuilders.post("/usuarios")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(content);
+
+        mockMvc.perform(request)
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.status().isBadRequest())
+
+    }
+
+    @Test
+    @Transactional
+    fun `Não deve salvar um usuario com login repetido`() {
+        usuarioRepository.save(Usuario("teste@email.com.br", "123456"))
+
+        val usuarioRequest = NovoUsuarioRequest("teste@email.com.br", "123456");
+
+        val content = objectMapper.writeValueAsString(usuarioRequest);
 
         val request = MockMvcRequestBuilders.post("/usuarios")
             .contentType(MediaType.APPLICATION_JSON)

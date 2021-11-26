@@ -1,4 +1,4 @@
-package br.com.zup.edu.mercadolivrekotlin.autores
+package br.com.zup.edu.mercadolivrekotlin.usuarios
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
