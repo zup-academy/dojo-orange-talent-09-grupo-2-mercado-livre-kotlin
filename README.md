@@ -3,3 +3,4 @@
 ## Participantes
 - Adriano Avelino
 - Henrique César
+- Diogo Magliano
