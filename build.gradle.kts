@@ -26,6 +26,8 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.springframework.security:spring-security-crypto:5.6.0")
+
 }
 
 tasks.withType<KotlinCompile> {

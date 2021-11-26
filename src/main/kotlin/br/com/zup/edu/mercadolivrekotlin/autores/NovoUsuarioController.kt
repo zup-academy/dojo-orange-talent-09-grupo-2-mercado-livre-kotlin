@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/autores")
+@RequestMapping("/usuarios")
 class NovoUsuarioController(val usuarioRepository: UsuarioRepository) {
 
     @PostMapping
